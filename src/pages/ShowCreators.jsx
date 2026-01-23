@@ -1,42 +1,33 @@
-import React, { useState, useEffect } from 'react'
-import { supabase } from '../client.js'
-import CreatorCard from '../components/CreatorCard.jsx'
-import { Link } from 'react-router-dom'
+import React, { useState, useEffect } from "react";
+import { supabase } from "../client.js";
+import CreatorCard from "../components/CreatorCard.jsx";
 
 function ShowCreators() {
-  const [creators, setCreators] = useState([]) // <-- default to []
+  const [creators, setCreators] = useState([]);
 
   useEffect(() => {
-    fetchCreators()
-  }, [])
+    fetchCreators();
+  }, []);
 
-  async function fetchCreators() {
-    const { data, error } = await supabase.from('creators').select('*')
+  const fetchCreators = async () => {
+    const { data, error } = await supabase.from("creators").select("*");
     if (error) {
-      console.log('Supabase error:', error)
-      setCreators([])  // <-- prevent null crash
+      console.error("Supabase error:", error);
+      setCreators([]);
     } else {
-      setCreators(data)
+      setCreators(data);
     }
-  }
+  };
 
-  async function handleDelete(id) {
-    await supabase.from('creators').delete().eq('id', id)
-    fetchCreators()
-  }
+  if (creators.length === 0) return <p>No creators yet!</p>;
 
   return (
-    <div>
-      <h1>CreatorVerse</h1>
-      <Link to="/add">Add Creator</Link>
-      {creators.length === 0 && <p>No creators yet!</p>}
-      <div>
-        {creators.map(c => (
-          <CreatorCard key={c.id} creator={c} onDelete={handleDelete} />
-        ))}
-      </div>
+    <div className="creators-list">
+      {creators.map((creator) => (
+        <CreatorCard key={creator.id} creator={creator} />
+      ))}
     </div>
-  )
+  );
 }
 
-export default ShowCreators  // <-- default export
+export default ShowCreators;
