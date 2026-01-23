@@ -11,7 +11,7 @@ body {
 .creators-list {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 20px;
+  gap: 25px;
   padding: 40px 20px;
   justify-items: center;
 }
@@ -28,7 +28,7 @@ body {
   max-width: 280px;
 }
 
-/* Card hover */
+/* Card hover effect */
 .creator-card:hover {
   transform: translateY(-5px);
   box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
@@ -41,6 +41,7 @@ body {
   width: 80px;
   height: 80px;
   object-fit: cover;
+  border: 2px solid #ddd; /* subtle border around images */
 }
 
 /* Card title */
@@ -63,17 +64,26 @@ body {
 /* Buttons / links */
 .creator-card a {
   display: inline-block;
-  margin: 5px 10px;
-  padding: 6px 12px;
-  border-radius: 6px;
+  margin: 5px 5px;
+  padding: 7px 15px;
+  border-radius: 8px;
   font-size: 0.9rem;
   text-decoration: none;
   background-color: #4f46e5;
   color: #fff;
   font-weight: 500;
-  transition: background 0.2s ease;
+  transition: background 0.2s ease, transform 0.1s ease;
 }
 
 .creator-card a:hover {
   background-color: #3730a3;
+  transform: translateY(-2px);
+}
+
+/* Responsive tweaks for smaller screens */
+@media (max-width: 600px) {
+  .creators-list {
+    padding: 20px 10px;
+    gap: 15px;
+  }
 }
