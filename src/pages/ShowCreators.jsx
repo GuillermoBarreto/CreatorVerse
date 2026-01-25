@@ -1,33 +1,49 @@
-import React, { useState, useEffect } from "react";
-import { supabase } from "../client.js";
-import CreatorCard from "../components/CreatorCard.jsx";
+import React, { useEffect, useState } from "react";
+import { supabase } from "../client";
+import CreatorCard from "../components/CreatorCard";
+import { Link } from "react-router-dom";
 
-function ShowCreators() {
+export default function ShowCreators() {
   const [creators, setCreators] = useState([]);
 
   useEffect(() => {
     fetchCreators();
   }, []);
 
-  const fetchCreators = async () => {
-    const { data, error } = await supabase.from("creators").select("*");
+  async function fetchCreators() {
+    const { data, error } = await supabase
+      .from("creators")
+      .select("*");
+
     if (error) {
       console.error("Supabase error:", error);
-      setCreators([]);
     } else {
       setCreators(data);
     }
-  };
-
-  if (creators.length === 0) return <p>No creators yet!</p>;
+  }
 
   return (
-    <div className="creators-list">
-      {creators.map((creator) => (
-        <CreatorCard key={creator.id} creator={creator} />
-      ))}
+    <div>
+      {/* 🔹 HEADER */}
+      <div style={{ textAlign: "center", marginTop: "30px" }}>
+        <h1>Creatorverse 🌌</h1>
+
+        {/* 🔹 ADD CREATOR BUTTON */}
+        <Link to="/new">
+          <button className="add-button">+ Add Creator</button>
+        </Link>
+      </div>
+
+      {/* 🔹 CREATOR LIST */}
+      <div className="creators-list">
+        {creators.length === 0 ? (
+          <p>No creators yet. Add one!</p>
+        ) : (
+          creators.map((creator) => (
+            <CreatorCard key={creator.id} creator={creator} />
+          ))
+        )}
+      </div>
     </div>
   );
 }
-
-export default ShowCreators;
