@@ -11,7 +11,12 @@ function AddCreator() {
 
   async function handleSubmit(e) {
     e.preventDefault()
-    await supabase.from('creators').insert([{ name, url, description, imageURL }])
+    const { error } = await supabase.from('creators').insert([{ name, url, description, imageURL }])
+    if (error) {
+      console.error('Failed to add creator:', error)
+      alert('Could not add creator. Please try again.')
+      return
+    }
     navigate('/')
   }
 
