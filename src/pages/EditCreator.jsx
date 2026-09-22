@@ -12,23 +12,40 @@ function EditCreator() {
   }, [])
 
   async function fetchCreator() {
-    const { data } = await supabase.from('creators').select('*').eq('id', id).single()
+    const { data, error } = await supabase.from('creators').select('*').eq('id', id).single()
+    if (error) {
+      console.error('Failed to load creator:', error)
+      alert('Could not load this creator.')
+      navigate('/')
+      return
+    }
     setCreator(data)
   }
 
   async function handleUpdate(e) {
     e.preventDefault()
-    await supabase.from('creators').update({
+    const { error } = await supabase.from('creators').update({
       name: creator.name,
       url: creator.url,
       description: creator.description,
       imageURL: creator.imageURL
     }).eq('id', id)
+    if (error) {
+      console.error('Failed to update creator:', error)
+      alert('Could not update creator. Please try again.')
+      return
+    }
     navigate('/')
   }
 
   async function handleDelete() {
-    await supabase.from('creators').delete().eq('id', id)
+    if (!window.confirm('Delete this creator?')) return
+    const { error } = await supabase.from('creators').delete().eq('id', id)
+    if (error) {
+      console.error('Failed to delete creator:', error)
+      alert('Could not delete creator. Please try again.')
+      return
+    }
     navigate('/')
   }
 
