@@ -29,7 +29,7 @@ export default function ShowCreators() {
         <h1>Creatorverse 🌌</h1>
 
         {/* 🔹 ADD CREATOR BUTTON */}
-        <Link to="/new">
+        <Link to="/add">
           <button className="add-button">+ Add Creator</button>
         </Link>
       </div>
