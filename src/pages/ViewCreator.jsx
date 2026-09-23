@@ -5,16 +5,23 @@ import { supabase } from '../client.js'
 function ViewCreator() {
   const { id } = useParams()
   const [creator, setCreator] = useState(null)
+  const [loadError, setLoadError] = useState(false)
 
   useEffect(() => {
     fetchCreator()
   }, [])
 
   async function fetchCreator() {
-    const { data } = await supabase.from('creators').select('*').eq('id', id).single()
+    const { data, error } = await supabase.from('creators').select('*').eq('id', id).single()
+    if (error) {
+      console.error('Failed to load creator:', error)
+      setLoadError(true)
+      return
+    }
     setCreator(data)
   }
 
+  if (loadError) return <p>Sorry, that creator could not be found.</p>
   if (!creator) return <p>Loading...</p>
 
   return (
