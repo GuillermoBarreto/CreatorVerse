@@ -5,6 +5,8 @@ import { Link } from "react-router-dom";
 
 export default function ShowCreators() {
   const [creators, setCreators] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     fetchCreators();
@@ -17,9 +19,11 @@ export default function ShowCreators() {
 
     if (error) {
       console.error("Supabase error:", error);
+      setError("Could not load creators. Please try again later.");
     } else {
       setCreators(data);
     }
+    setLoading(false);
   }
 
   return (
@@ -36,7 +40,11 @@ export default function ShowCreators() {
 
       {/* 🔹 CREATOR LIST */}
       <div className="creators-list">
-        {creators.length === 0 ? (
+        {loading ? (
+          <p>Loading creators...</p>
+        ) : error ? (
+          <p role="alert">{error}</p>
+        ) : creators.length === 0 ? (
           <p>No creators yet. Add one!</p>
         ) : (
           creators.map((creator) => (
