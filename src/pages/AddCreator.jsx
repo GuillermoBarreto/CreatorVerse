@@ -24,10 +24,14 @@ function AddCreator() {
     <div>
       <h1>Add Creator</h1>
       <form onSubmit={handleSubmit}>
-        <input placeholder="Name" value={name} onChange={e => setName(e.target.value)} required /><br/>
-        <input placeholder="URL" value={url} onChange={e => setUrl(e.target.value)} required /><br/>
-        <textarea placeholder="Description" value={description} onChange={e => setDescription(e.target.value)} required /><br/>
-        <input placeholder="Image URL (optional)" value={imageURL} onChange={e => setImageURL(e.target.value)} /><br/>
+        <label htmlFor="name">Name</label>
+        <input id="name" placeholder="Name" value={name} onChange={e => setName(e.target.value)} required /><br/>
+        <label htmlFor="url">URL</label>
+        <input id="url" type="url" placeholder="https://" value={url} onChange={e => setUrl(e.target.value)} required /><br/>
+        <label htmlFor="description">Description</label>
+        <textarea id="description" placeholder="Description" value={description} onChange={e => setDescription(e.target.value)} required /><br/>
+        <label htmlFor="imageURL">Image URL (optional)</label>
+        <input id="imageURL" type="url" placeholder="https://" value={imageURL} onChange={e => setImageURL(e.target.value)} /><br/>
         <button type="submit">Add</button>
       </form>
     </div>
