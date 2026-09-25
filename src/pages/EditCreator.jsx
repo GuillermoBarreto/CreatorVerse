@@ -53,10 +53,14 @@ function EditCreator() {
     <div>
       <h1>Edit Creator</h1>
       <form onSubmit={handleUpdate}>
-        <input value={creator.name} onChange={e => setCreator({...creator, name: e.target.value})} required /><br/>
-        <input value={creator.url} onChange={e => setCreator({...creator, url: e.target.value})} required /><br/>
-        <textarea value={creator.description} onChange={e => setCreator({...creator, description: e.target.value})} required /><br/>
-        <input value={creator.imageURL} onChange={e => setCreator({...creator, imageURL: e.target.value})} /><br/>
+        <label htmlFor="edit-name">Name</label>
+        <input id="edit-name" value={creator.name} onChange={e => setCreator({...creator, name: e.target.value})} required /><br/>
+        <label htmlFor="edit-url">URL</label>
+        <input id="edit-url" type="url" value={creator.url} onChange={e => setCreator({...creator, url: e.target.value})} required /><br/>
+        <label htmlFor="edit-description">Description</label>
+        <textarea id="edit-description" value={creator.description} onChange={e => setCreator({...creator, description: e.target.value})} required /><br/>
+        <label htmlFor="edit-image-url">Image URL (optional)</label>
+        <input id="edit-image-url" type="url" value={creator.imageURL} onChange={e => setCreator({...creator, imageURL: e.target.value})} /><br/>
         <button type="submit">Update</button>
       </form>
       <button onClick={handleDelete} style={{ background: 'red', color: 'white' }}>Delete</button>
