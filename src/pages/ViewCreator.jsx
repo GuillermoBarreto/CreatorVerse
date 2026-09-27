@@ -30,8 +30,11 @@ function ViewCreator() {
       <p>{creator.description}</p>
       {creator.imageURL && <img src={creator.imageURL} alt={creator.name} width="200" />}
       <p><a href={creator.url} target="_blank" rel="noopener noreferrer">Visit Creator</a></p>
-      <Link to={`/edit/${creator.id}`}><button>Edit</button></Link>
-      <Link to="/"><button>Back</button></Link>
+      <p>
+        <Link to={`/edit/${creator.id}`}>Edit</Link>
+        {' | '}
+        <Link to="/">Back</Link>
+      </p>
     </div>
   )
 }
