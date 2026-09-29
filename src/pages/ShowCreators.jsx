@@ -9,7 +9,30 @@ export default function ShowCreators() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    fetchCreators();
+    let isMounted = true;
+
+    async function load() {
+      const { data, error } = await supabase
+        .from("creators")
+        .select("*");
+
+      // The component may have unmounted while the request was in flight.
+      if (!isMounted) return;
+
+      if (error) {
+        console.error("Supabase error:", error);
+        setError("Could not load creators. Please try again later.");
+      } else {
+        setCreators(data);
+      }
+      setLoading(false);
+    }
+
+    load();
+
+    return () => {
+      isMounted = false;
+    };
   }, []);
 
   async function fetchCreators() {
