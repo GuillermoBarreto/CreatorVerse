@@ -8,18 +8,26 @@ function ViewCreator() {
   const [loadError, setLoadError] = useState(false)
 
   useEffect(() => {
-    fetchCreator()
-  }, [])
+    let isMounted = true
 
-  async function fetchCreator() {
-    const { data, error } = await supabase.from('creators').select('*').eq('id', id).single()
-    if (error) {
-      console.error('Failed to load creator:', error)
-      setLoadError(true)
-      return
+    async function fetchCreator() {
+      const { data, error } = await supabase.from('creators').select('*').eq('id', id).single()
+      // The component may have unmounted while the request was in flight.
+      if (!isMounted) return
+      if (error) {
+        console.error('Failed to load creator:', error)
+        setLoadError(true)
+        return
+      }
+      setCreator(data)
     }
-    setCreator(data)
-  }
+
+    fetchCreator()
+
+    return () => {
+      isMounted = false
+    }
+  }, [])
 
   if (loadError) return <p>Sorry, that creator could not be found.</p>
   if (!creator) return <p>Loading...</p>
