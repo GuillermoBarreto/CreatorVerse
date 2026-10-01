@@ -35,20 +35,6 @@ export default function ShowCreators() {
     };
   }, []);
 
-  async function fetchCreators() {
-    const { data, error } = await supabase
-      .from("creators")
-      .select("*");
-
-    if (error) {
-      console.error("Supabase error:", error);
-      setError("Could not load creators. Please try again later.");
-    } else {
-      setCreators(data);
-    }
-    setLoading(false);
-  }
-
   return (
     <div>
       {/* 🔹 HEADER */}
