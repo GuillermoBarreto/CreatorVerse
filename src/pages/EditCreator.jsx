@@ -8,19 +8,27 @@ function EditCreator() {
   const [creator, setCreator] = useState({ name: '', url: '', description: '', imageURL: '' })
 
   useEffect(() => {
-    fetchCreator()
-  }, [])
+    let isMounted = true
 
-  async function fetchCreator() {
-    const { data, error } = await supabase.from('creators').select('*').eq('id', id).single()
-    if (error) {
-      console.error('Failed to load creator:', error)
-      alert('Could not load this creator.')
-      navigate('/')
-      return
+    async function fetchCreator() {
+      const { data, error } = await supabase.from('creators').select('*').eq('id', id).single()
+      // The component may have unmounted while the request was in flight.
+      if (!isMounted) return
+      if (error) {
+        console.error('Failed to load creator:', error)
+        alert('Could not load this creator.')
+        navigate('/')
+        return
+      }
+      setCreator(data)
     }
-    setCreator(data)
-  }
+
+    fetchCreator()
+
+    return () => {
+      isMounted = false
+    }
+  }, [])
 
   async function handleUpdate(e) {
     e.preventDefault()
