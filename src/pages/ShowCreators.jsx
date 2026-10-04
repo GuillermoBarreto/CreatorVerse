@@ -14,7 +14,8 @@ export default function ShowCreators() {
     async function load() {
       const { data, error } = await supabase
         .from("creators")
-        .select("*");
+        .select("*")
+        .order("name", { ascending: true });
 
       // The component may have unmounted while the request was in flight.
       if (!isMounted) return;
