@@ -27,7 +27,8 @@ function ViewCreator() {
     return () => {
       isMounted = false
     }
-  }, [])
+    // Refetch when the route id changes so the page never shows a stale creator.
+  }, [id])
 
   if (loadError) return <p>Sorry, that creator could not be found.</p>
   if (!creator) return <p>Loading...</p>
