@@ -15,9 +15,14 @@ function CreatorCard({ creator }) {
         />
       )}
       <p>{creator.description}</p>
-      <a href={creator.url} target="_blank" rel="noopener noreferrer" aria-label={`Visit ${creator.name} (opens in a new tab)`}>
-        Visit
-      </a>
+      {/* Only render the link when a URL exists: a missing url would render
+          an anchor with no href, which goes nowhere and confuses screen
+          readers. */}
+      {creator.url && (
+        <a href={creator.url} target="_blank" rel="noopener noreferrer" aria-label={`Visit ${creator.name} (opens in a new tab)`}>
+          Visit
+        </a>
+      )}
       <br />
       <Link to={`/edit/${creator.id}`} aria-label={`Edit ${creator.name}`}>Edit</Link>
     </div>

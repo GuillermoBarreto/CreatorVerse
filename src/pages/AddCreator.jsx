@@ -11,7 +11,16 @@ function AddCreator() {
 
   async function handleSubmit(e) {
     e.preventDefault()
-    const { error } = await supabase.from('creators').insert([{ name, url, description, imageURL }])
+    // Trim whitespace: without this, a name of only spaces passes the
+    // `required` check and gets stored as a blank creator.
+    const trimmedName = name.trim()
+    const trimmedUrl = url.trim()
+    const trimmedDescription = description.trim()
+    if (!trimmedName || !trimmedUrl || !trimmedDescription) {
+      alert('Please fill in the name, URL, and description.')
+      return
+    }
+    const { error } = await supabase.from('creators').insert([{ name: trimmedName, url: trimmedUrl, description: trimmedDescription, imageURL: imageURL.trim() || null }])
     if (error) {
       console.error('Failed to add creator:', error)
       alert('Could not add creator. Please try again.')
