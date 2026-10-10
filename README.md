@@ -14,29 +14,33 @@ Delete a creator you no longer want in your list
 
 (Optional stretch) Styled with Picocss for a clean and minimal design
 
-<!-- Installation
+## Installation
 
 Clone the repo:
 
+```bash
 git clone https://github.com/GuillermoBarreto/CreatorVerse.git
 cd CreatorVerse
-
+```
 
 Install dependencies:
 
+```bash
 npm install
+```
 
+Add your Supabase credentials in `src/client.js`:
 
-Add your Supabase credentials in src/client.js:
-
+```js
 const URL = 'YOUR_PROJECT_URL'
 const API_KEY = 'YOUR_ANON_KEY'
-
+```
 
 Run the app locally:
 
-npm run dev -->
-
+```bash
+npm run dev
+```
 
 Open the URL provided by Vite in your browser (usually http://localhost:5173)
 
