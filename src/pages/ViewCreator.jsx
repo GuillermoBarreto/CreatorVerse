@@ -37,7 +37,7 @@ function ViewCreator() {
     <div>
       <h1>{creator.name}</h1>
       <p>{creator.description}</p>
-      {creator.imageURL && <img src={creator.imageURL} alt={creator.name} width="200" />}
+      {creator.imageURL && <img src={creator.imageURL} alt={creator.name} width="200" loading="lazy" decoding="async" />}
       {/* Only render the link when a URL exists, like CreatorCard does: a
           missing url would render an anchor with no href, which goes nowhere
           and confuses screen readers. */}
@@ -54,4 +54,5 @@ function ViewCreator() {
 }
 
 export default ViewCreator
+
 
