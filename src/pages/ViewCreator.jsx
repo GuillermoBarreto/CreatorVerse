@@ -38,7 +38,12 @@ function ViewCreator() {
       <h1>{creator.name}</h1>
       <p>{creator.description}</p>
       {creator.imageURL && <img src={creator.imageURL} alt={creator.name} width="200" />}
-      <p><a href={creator.url} target="_blank" rel="noopener noreferrer">Visit Creator</a></p>
+      {/* Only render the link when a URL exists, like CreatorCard does: a
+          missing url would render an anchor with no href, which goes nowhere
+          and confuses screen readers. */}
+      {creator.url && (
+        <p><a href={creator.url} target="_blank" rel="noopener noreferrer">Visit Creator</a></p>
+      )}
       <p>
         <Link to={`/edit/${creator.id}`}>Edit</Link>
         {' | '}
@@ -49,3 +54,4 @@ function ViewCreator() {
 }
 
 export default ViewCreator
+
